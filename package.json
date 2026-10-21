@@ -3,7 +3,7 @@
   "name": "file-tree-generator",
   "title": "File Tree Generator",
   "description": "Generates file tree from text",
-  "icon": "command-icon.png",
+  "icon": "assets/command-icon.png",
   "author": "almatkai",
   "categories": [
     "Developer Tools",
