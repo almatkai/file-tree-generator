@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "id": "com.tezbar.native.file-tree-generator",
+  "slug": "file-tree-generator",
+  "name": "File Tree Generator",
+  "version": "0.2.0",
+  "description": "Generates file tree from text. Original Raycast extension by csharp; native port from almatkai/file-tree-generator.",
+  "icon": "/extensions/icons/file-tree-generator.png",
+  "runtime": "rust",
+  "replaces": [
+    "raycast.file-tree-generator"
+  ],
+  "platforms": [
+    "macOS",
+    "Windows"
+  ],
+  "preferences": [],
+  "commands": [
+    {
+      "name": "index",
+      "title": "Create File Tree",
+      "description": "Generates file tree from text",
+      "runtime": "rust",
+      "platforms": [
+        "macOS",
+        "Windows"
+      ],
+      "arguments": []
+    }
+  ],
+  "verification": [
+    {
+      "platform": "macOS",
+      "state": "not-run",
+      "note": "Headless contracts only; real host UI and clipboard QA not run"
+    },
+    {
+      "platform": "Windows",
+      "state": "not-run",
+      "note": "Headless contracts only; real host UI and clipboard QA not run"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+[package]
+name = "tezbar-file-tree-generator"
+version = "0.2.0"
+edition = "2021"
+rust-version = "1.85"
+license = "Apache-2.0 AND MIT AND Unicode-3.0"
+description = "Offline native port of File Tree Generator"
+repository = "https://github.com/almatkai/file-tree-generator"
+include = [
+  "src/**",
+  "adapter/**",
+  "assets/**",
+  "examples/**",
+  "checks/*.py",
+  "checks/*.mjs",
+  "checks/*.txt",
+  "checks/*-Cargo.lock",
+  "checks/templates/**",
+  "fixtures/hashes.json",
+  "fixtures/beta/**",
+  "fixtures/original/**",
+  "fixtures/locked/**",
+  "licenses/**",
+  "/README.md",
+  "/INTEGRATION.md",
+  "/VALIDATION.md",
+  "/PROVENANCE.md",
+  "/NOTICE.md",
+  "manifest.json",
+  "/Cargo.lock",
+  "/.gitignore",
+  "fixtures/own/.eslintrc.json",
+  "fixtures/own/.gitignore",
+  "fixtures/own/.prettierrc",
+  "fixtures/own/CHANGELOG.md",
+  "fixtures/own/LICENSE",
+  "fixtures/own/README.md",
+  "fixtures/own/assets/command-icon.png",
+  "fixtures/own/metadata/file-tree-generator-1.png",
+  "fixtures/own/metadata/file-tree-generator-2.png",
+  "fixtures/own/metadata/file-tree-generator-3.png",
+  "fixtures/own/package-lock.json",
+  "fixtures/own/package.json",
+  "fixtures/own/raycast-env.d.ts",
+  "fixtures/own/src/FileStructure.ts",
+  "fixtures/own/src/generate-tree.ts",
+  "fixtures/own/src/index.tsx",
+  "fixtures/own/src/line-strings.ts",
+  "fixtures/own/src/parse-input.ts",
+  "fixtures/own/test/smoke.test.ts",
+  "fixtures/own/tsconfig.json"
+]
+
+[dependencies]
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = "=1.0.145"
