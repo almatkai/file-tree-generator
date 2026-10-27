@@ -1,0 +1,77 @@
+//! HEADLESS CONTRACT HARNESS, not host runtime registration.
+pub mod native_core {
+    pub mod common;
+    pub mod extensions {
+        mod native;
+        pub mod v2_file_tree_generator;
+        pub mod v2_sdk;
+        // STUB registry/installation boundary. NativeSessions itself is byte-exact.
+        mod registry {
+            use crate::native_core::common::CoreContext;
+            use serde_json::{json, Value};
+            pub fn installed_command(ctx: &CoreContext, _: &str, _: &str) -> Option<Value> {
+                if ctx.paths.data_dir.join("uninstalled").exists() {
+                    None
+                } else {
+                    Some(json!({}))
+                }
+            }
+            pub fn preferences(_: &Value, _: Option<&str>) -> Result<Value, String> {
+                Ok(json!({}))
+            }
+        }
+        // STUB compiled registry: this is the concrete registration to add in beta.
+        mod v2_runtime {
+            use crate::native_core::common::{CoreContext, CoreResult};
+            use serde_json::Value;
+            pub fn slug(id: &str) -> Option<&str> {
+                match id {
+                    "com.tezbar.native.file-tree-generator"
+                    | "raycast.file-tree-generator"
+                    | "file-tree-generator" => Some("file-tree-generator"),
+                    _ => None,
+                }
+            }
+            pub fn supports(id: &str, command: &str) -> bool {
+                slug(id).is_some() && super::v2_file_tree_generator::commands().contains(&command)
+            }
+            pub async fn handle(
+                ctx: &CoreContext,
+                _: &str,
+                command: &str,
+                op: &str,
+                payload: &Value,
+                state: &mut Value,
+            ) -> CoreResult {
+                super::v2_file_tree_generator::handle(ctx, command, op, payload, state).await
+            }
+        }
+        #[derive(Clone, Default)]
+        pub struct Sessions(native::NativeSessions);
+        impl Sessions {
+            pub async fn call(
+                &self,
+                ctx: &crate::native_core::common::CoreContext,
+                channel: &str,
+                body: serde_json::Value,
+            ) -> serde_json::Value {
+                self.0
+                    .handle(
+                        ctx,
+                        &std::sync::Arc::new(std::sync::Mutex::new(())),
+                        channel,
+                        &[body],
+                    )
+                    .await
+                    .expect("native handler")
+                    .expect("IPC response")
+            }
+            pub async fn clear(&self) {
+                self.0.clear().await;
+            }
+            pub async fn clear_slug(&self) {
+                self.0.clear_slug("file-tree-generator").await;
+            }
+        }
+    }
+}
